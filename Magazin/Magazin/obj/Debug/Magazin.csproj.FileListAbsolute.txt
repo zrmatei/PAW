@@ -1,0 +1,11 @@
+C:\Users\Razvan\source\repos\Magazin\Magazin\bin\Debug\Magazin.exe.config
+C:\Users\Razvan\source\repos\Magazin\Magazin\bin\Debug\Magazin.exe
+C:\Users\Razvan\source\repos\Magazin\Magazin\bin\Debug\Magazin.pdb
+C:\Users\Razvan\source\repos\Magazin\Magazin\obj\Debug\Magazin.csproj.AssemblyReference.cache
+C:\Users\Razvan\source\repos\Magazin\Magazin\obj\Debug\Magazin.csproj.SuggestedBindingRedirects.cache
+C:\Users\Razvan\source\repos\Magazin\Magazin\obj\Debug\Magazin.Form1.resources
+C:\Users\Razvan\source\repos\Magazin\Magazin\obj\Debug\Magazin.csproj.GenerateResource.cache
+C:\Users\Razvan\source\repos\Magazin\Magazin\obj\Debug\Magazin.csproj.CoreCompileInputs.cache
+C:\Users\Razvan\source\repos\Magazin\Magazin\obj\Debug\Magazin.exe
+C:\Users\Razvan\source\repos\Magazin\Magazin\obj\Debug\Magazin.pdb
+C:\Users\Razvan\source\repos\Magazin\Magazin\obj\Debug\Magazin.Modificari.resources
