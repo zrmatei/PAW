@@ -1,0 +1,11 @@
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\bin\Debug\proiectPAW_dictionar.exe.config
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\bin\Debug\proiectPAW_dictionar.exe
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\bin\Debug\proiectPAW_dictionar.pdb
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.csproj.AssemblyReference.cache
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.csproj.SuggestedBindingRedirects.cache
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.csproj.CoreCompileInputs.cache
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.exe
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.pdb
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.csproj.GenerateResource.cache
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.Form1.resources
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.Cuvinte.resources
