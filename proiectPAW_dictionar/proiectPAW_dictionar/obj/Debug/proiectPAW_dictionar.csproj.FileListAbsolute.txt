@@ -9,3 +9,6 @@ C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug
 C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.csproj.GenerateResource.cache
 C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.Form1.resources
 C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.Cuvinte.resources
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\obj\Debug\proiectPAW_dictionar.UserControl1.resources
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\bin\Debug\Database1.mdf
+C:\Users\Razvan\source\repos\proiectPAW_dictionar\proiectPAW_dictionar\bin\Debug\Database1_log.ldf

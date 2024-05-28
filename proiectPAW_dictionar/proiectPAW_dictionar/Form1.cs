@@ -5,8 +5,8 @@ using System.Windows.Forms;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Drawing.Printing;
-
-
+using System.Data.SqlClient;
+using System.Data;
 
 namespace proiectPAW_dictionar
 {
@@ -26,25 +26,39 @@ namespace proiectPAW_dictionar
             InitDictionar();
             PopLVCuvinteRo();
             PopLVCuvinteEng();
-            this.printPreviewDialog1 = new PrintPreviewDialog(); 
+
+
+            foreach (CuvRo cuv in listaRo)
+            {
+                TreeNode tn = new TreeNode(cuv.Cuvant);
+                tn.Tag = cuv;
+                tvCuvinte.Nodes.Add(tn);
+            }
+
+            this.printPreviewDialog1 = new PrintPreviewDialog();
+        }
+
+        private void uc_schimb(object sender, Color c)
+        {
+            this.BackColor = c;
         }
 
         private void InitDictionar()
         {
-          listaRo = new List<CuvRo>
+            listaRo = new List<CuvRo>
           {
              new CuvRo("apa", "Neutru", "lichid esential de baut", new DateTime(2000, 05, 15)),
              new CuvRo("carte", "Feminin", "obiect pentru citit", new DateTime(2021, 01, 20))
           };
 
-          listaEng = new List<CuvEng>
+            listaEng = new List<CuvEng>
           {
             new CuvEng("water", "apa", new DateTime(2000, 05, 15)),
             new CuvEng("book", "carte", new DateTime(2021, 01, 20))
           };
 
-          listaRo[0].AdaugTrans(listaEng[0]);
-          listaRo[1].AdaugTrans(listaEng[1]);
+            listaRo[0].AdaugTrans(listaEng[0]);
+            listaRo[1].AdaugTrans(listaEng[1]);
         }
 
         private void PopLVCuvinteRo()
@@ -152,10 +166,10 @@ namespace proiectPAW_dictionar
                     lviRo.SubItems[3].Text = c.Expl;
 
                     //practic fac un foreach pentru a cauta in toata toata lista de cuvinte in engleza cuvantul in romana asociat + update-ul
-                    foreach(ListViewItem lvi in lvCuvEng.Items)
+                    foreach (ListViewItem lvi in lvCuvEng.Items)
                     {
                         CuvEng gasit = lvi.Tag as CuvEng;
-                        if(gasit.RomanianWord == c.Cuvant)
+                        if (gasit.RomanianWord == c.Cuvant)
                         {
                             lvi.SubItems[0].Text = en.Word;
                             lvi.SubItems[1].Text = en.RomanianWord;
@@ -171,16 +185,16 @@ namespace proiectPAW_dictionar
             SaveFileDialog fd = new SaveFileDialog();
             fd.Filter = "dictionar(*.dic) | *.dic";
             fd.CheckFileExists = true;
-            if(fd.ShowDialog() == DialogResult.OK)
+            if (fd.ShowDialog() == DialogResult.OK)
             {
                 List<CuvRo> lista = new List<CuvRo>();
                 List<CuvEng> lista2 = new List<CuvEng>();
-                foreach(ListViewItem lvi in lvCuvRo.Items)
+                foreach (ListViewItem lvi in lvCuvRo.Items)
                 {
                     lista.Add((CuvRo)lvi.Tag);
                     CuvRo cRo = (CuvRo)lvi.Tag;
 
-                    foreach(CuvEng cEn in cRo.Translations)
+                    foreach (CuvEng cEn in cRo.Translations)
                     {
                         lista2.Add(cEn);
                     }
@@ -199,7 +213,7 @@ namespace proiectPAW_dictionar
             OpenFileDialog fd = new OpenFileDialog();
             fd.Filter = "dictionar(*.dic) | *.dic";
             fd.CheckFileExists = true;
-            
+
             if (fd.ShowDialog() == DialogResult.OK)
             {
                 List<CuvRo> lista = new List<CuvRo>();
@@ -237,19 +251,106 @@ namespace proiectPAW_dictionar
         }
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
-                pd = new PrintDocument();
-                pd.PrintPage += new PrintPageEventHandler(this.PrintPage);
-                Panel panel = new Panel();
-                this.Controls.Add(panel);
-                Graphics grp = panel.CreateGraphics();
-                Size formSize = this.ClientSize;
-                bitmap = new Bitmap(formSize.Width, formSize.Height, grp);
-                grp = Graphics.FromImage(bitmap);
-                Point panelLocation = PointToScreen(panel.Location);
-                grp.CopyFromScreen(panelLocation.X, panelLocation.Y, 0, 0, formSize);
-                printPreviewDialog1.Document = pd;
-                printPreviewDialog1.PrintPreviewControl.Zoom = 1;
-                printPreviewDialog1.ShowDialog();
+            pd = new PrintDocument();
+            pd.PrintPage += new PrintPageEventHandler(this.PrintPage);
+            Panel panel = new Panel();
+            this.Controls.Add(panel);
+            Graphics grp = panel.CreateGraphics();
+            Size formSize = this.ClientSize;
+            bitmap = new Bitmap(formSize.Width, formSize.Height, grp);
+            grp = Graphics.FromImage(bitmap);
+            Point panelLocation = PointToScreen(panel.Location);
+            grp.CopyFromScreen(panelLocation.X, panelLocation.Y, 0, 0, formSize);
+            printPreviewDialog1.Document = pd;
+            printPreviewDialog1.PrintPreviewControl.Zoom = 1;
+            printPreviewDialog1.ShowDialog();
+        }
+
+
+
+
+        private void tvCuvinte_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(CuvEng)))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void tvCuvinte_DragDrop(object sender, DragEventArgs e)
+        {
+            Point punct = new Point(e.X, e.Y);
+            Point punctDinTreeview = tvCuvinte.PointToClient(punct);
+            TreeNode tn = tvCuvinte.GetNodeAt(punctDinTreeview);
+
+            if (!(tn is null) && e.Effect == DragDropEffects.Copy &&
+                 e.Data.GetDataPresent(new CuvEng().GetType().ToString()))
+            {
+                CuvEng p = (CuvEng)e.Data.GetData(new CuvEng().GetType().ToString());
+                TreeNode t = new TreeNode(p.Word);
+                t.Tag = p;
+                tn.Nodes.Add(t);
+                tn.Expand();
+            }
+        }
+
+        private void lvCuvEng_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (lvCuvEng.SelectedItems.Count > 0)
+                lvCuvEng.DoDragDrop(lvCuvEng.SelectedItems[0].Tag, DragDropEffects.Copy);
+        }
+
+        private void cuvantBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        {
+            this.Validate();
+            this.cuvantBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.modelDataSet);
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'modelDataSet.Cuvant' table. You can move, or remove it, as needed.
+            this.cuvantTableAdapter.Fill(this.modelDataSet.Cuvant);
+
+        }
+
+        private void btnInsert_Click(object sender, EventArgs e)
+        {
+
+            foreach (ListViewItem lvi in lvCuvRo.Items)
+            {
+                SqlConnection conexiune = new SqlConnection("Data Source= (localdb)\\MSSQLLocalDB; AttachDbFilename=C:\\Users\\Razvan\\source\\repos\\proiectPAW_dictionar\\proiectPAW_dictionar\\Database1.mdf; Integrated security=True");
+                conexiune.Open();
+
+                SqlCommand cmd = new SqlCommand(
+                    "INSERT INTO Cuvant(ro, gen, data, explicatie) VALUES(@ro, @gen, @data, @explicatie)", conexiune);
+                cmd.Parameters.AddWithValue("@ro", lvi.SubItems[0].Text);
+                cmd.Parameters.AddWithValue("@gen", lvi.SubItems[1].Text);
+                cmd.Parameters.AddWithValue("@data", lvi.SubItems[2].Text);
+                cmd.Parameters.AddWithValue("@explicatie", lvi.SubItems[3].Text);
+
+                
+                cmd.ExecuteNonQuery();
+                conexiune.Close();
+            }
+        }
+
+        private void btnChart_Click(object sender, EventArgs e)
+        {
+            SqlConnection conexiune = new SqlConnection("Data Source= (localdb)\\MSSQLLocalDB; AttachDbFilename=C:\\Users\\Razvan\\source\\repos\\proiectPAW_dictionar\\proiectPAW_dictionar\\Database1.mdf; Integrated security=True");
+            conexiune.Open();
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter("SELECT gen, COUNT(*) as nrCuv FROM cuvant GROUP BY gen", conexiune);
+            da.Fill(dt);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                string gen = dr["gen"].ToString();
+                int contor = (int)dr["nrCuv"]; 
+                grafic.Series[gen].Points.AddXY(gen, contor);
+            }
+            conexiune.Close();
         }
     }
 }
